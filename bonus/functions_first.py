@@ -19,13 +19,13 @@ def lineas(p1, p2, color, img):
             y = a*p1x + b
             if p1x >= 0 and y >= 0:
                 img[p1x, y] = color
-                tab.append(sf.Vector2(int(p1x), int(y)))
+                tab.append(sf.system.Vector2(int(p1x), int(y)))
             p1x = p1x + 0.5
         while p2.x < p1x:
             y = a*p1x + b
             if p1x >= 0 and y >= 0:
                 img[p1x, y] = color
-                tab.append(sf.Vector2(int(p1x), int(y)))
+                tab.append(sf.system.Vector2(int(p1x), int(y)))
             p1x = p1x - 0.5
     return (tab)
 

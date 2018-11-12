@@ -10,7 +10,7 @@ def get_fdf(tab2, step, img, color):
             z = -1/2 * (int(tab2[line][col]))
             X = 0.5*x - 0.5*y + step*len(tab2)/2
             Y = z + (0.5/2)*x + (0.5/2)*y
-            tab2[line][col] = sf.Vector3(X,Y,z)
+            tab2[line][col] = sf.system.Vector3(X,Y,z)
     for line in range(0, len(tab2) - 1):
         for col in range(0, len(tab2[line])):
             lineas(tab2[line][col], tab2[line + 1][col], color, img)
@@ -25,17 +25,16 @@ def main():
     width = 1920
     h = 1080
     step = int(width / len(tab))
-    img = sf.Image.create(width, h, sf.Color.TRANSPARENT)
-    get_fdf(tab, step, img, sf.Color.WHITE)
-    tex = sf.Texture.from_image(img)
-    spr = sf.Sprite(tex)
-    w = sf.RenderWindow(sf.VideoMode(width, h), "FDF", sf.Style.FULLSCREEN)
+    img = sf.graphics.Image.create(width, h, sf.graphics.Color.TRANSPARENT)
+    get_fdf(tab, step, img, sf.graphics.Color.WHITE)
+    tex = sf.graphics.Texture.from_image(img)
+    spr = sf.graphics.Sprite(tex)
+    w = sf.graphics.RenderWindow(sf.window.VideoMode(width, h), "FDF", sf.window.Style.FULLSCREEN)
     while w.is_open:
         for event in w.events:
-            if type(event) is sf.CloseEvent or \
-                    sf.Keyboard.is_key_pressed(sf.Keyboard.ESCAPE):
+            if type(event) is sf.window.Event.CLOSED or sf.window.Keyboard.is_key_pressed(sf.window.Keyboard.ESCAPE):
                 w.close()
-        w.clear(sf.Color.BLACK)
+        w.clear(sf.graphics.Color.BLACK)
         w.draw(spr)
         w.display()
 main()

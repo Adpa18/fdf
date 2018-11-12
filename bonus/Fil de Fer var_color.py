@@ -13,7 +13,7 @@ def get_fdf(tab2, step, img, vc):
             z = -1/a * (int(tab2[line][col])) + random.uniform(0, 0)
             X = 0.5*x - 0.5*y + step*len(tab2)/2
             Y = z + (0.5/2)*x + (0.5/2)*y
-            tab2[line][col] = sf.Vector3(X, Y, z)
+            tab2[line][col] = sf.system.Vector3(X, Y, z)
     for line in range(0, len(tab2) - 1):
         for col in range(0, len(tab2[line])):
             c = color_line(tab2[line][col].z, tab2[line + 1][col].z, col, vc)
@@ -30,22 +30,21 @@ def main():
     width = 1920
     h = 1080
     step = int(width / len(tab))
-    clock = sf.Clock()
-    w = sf.RenderWindow(sf.VideoMode(width, h), "FDF", sf.Style.FULLSCREEN)
+    clock = sf.system.Clock()
+    w = sf.graphics.RenderWindow(sf.window.VideoMode(width, h), "FDF", sf.window.Style.FULLSCREEN)
     w.framerate_limit = 25
     while w.is_open:
         for event in w.events:
-            if type(event) is sf.CloseEvent or \
-                    sf.Keyboard.is_key_pressed(sf.Keyboard.ESCAPE):
+            if type(event) is sf.window.Event.CLOSED or sf.window.Keyboard.is_key_pressed(sf.window.Keyboard.ESCAPE):
                 w.close()
-        var_color = sf.Mouse.get_position().x / 7.6
-        w.clear(sf.Color.BLACK)
+        var_color = sf.window.Mouse.get_position().x / 7.6
+        w.clear(sf.graphics.Color.BLACK)
         frame(clock, w)
         tab = fdf_tab(file)
-        img = sf.Image.create(width, h, sf.Color.TRANSPARENT)
+        img = sf.graphics.Image.create(width, h, sf.graphics.Color.TRANSPARENT)
         get_fdf(tab, step, img, var_color)
-        tex = sf.Texture.from_image(img)
-        spr = sf.Sprite(tex)
+        tex = sf.graphics.Texture.from_image(img)
+        spr = sf.graphics.Sprite(tex)
         w.draw(spr)
         w.display()
 main()
